@@ -71,6 +71,15 @@ def create_provider(
             default_model_name=model or "default",
         )
 
+    if provider_type == "cuda":
+        from autocontext.providers.openai_compat import OpenAICompatibleProvider
+
+        return OpenAICompatibleProvider(
+            api_key=api_key or "no-key",
+            base_url=base_url or "http://localhost:8130/v1",
+            default_model_name=model or "qwen3.5-4b",
+        )
+
     if provider_type == "mlx":
         from autocontext.providers.mlx_provider import MLXProvider
 
