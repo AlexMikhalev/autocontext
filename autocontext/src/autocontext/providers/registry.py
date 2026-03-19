@@ -77,7 +77,18 @@ def create_provider(
         return OpenAICompatibleProvider(
             api_key=api_key or "no-key",
             base_url=base_url or "http://localhost:8130/v1",
-            default_model_name=model or "qwen3.5-4b",
+            default_model_name=model or "Qwen_Qwen3.5-4B-IQ4_XS.gguf",
+            extra_body={"thinking": False},
+        )
+
+    if provider_type == "llama":
+        from autocontext.providers.openai_compat import OpenAICompatibleProvider
+
+        return OpenAICompatibleProvider(
+            api_key=api_key or "no-key",
+            base_url=base_url or "http://localhost:8130/v1",
+            default_model_name=model or "Qwen_Qwen3.5-4B-IQ4_XS.gguf",
+            extra_body={"thinking": False},
         )
 
     if provider_type == "mlx":

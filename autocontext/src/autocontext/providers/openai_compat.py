@@ -38,6 +38,7 @@ class OpenAICompatibleProvider(LLMProvider):
         base_url: str | None = None,
         default_model_name: str = "gpt-4o",
         extra_headers: dict[str, str] | None = None,
+        extra_body: dict[str, Any] | None = None,
     ) -> None:
         if not _HAS_OPENAI:
             raise ProviderError(
@@ -54,6 +55,7 @@ class OpenAICompatibleProvider(LLMProvider):
 
         self._client = openai.OpenAI(**kwargs)
         self._default_model = default_model_name
+        self._extra_body = extra_body or {}
 
     def complete(
         self,
@@ -65,20 +67,26 @@ class OpenAICompatibleProvider(LLMProvider):
     ) -> CompletionResult:
         model_id = model or self._default_model
         try:
-            response = self._client.chat.completions.create(
-                model=model_id,
-                temperature=temperature,
-                max_tokens=max_tokens,
-                messages=[
+            request_kwargs: dict[str, Any] = {
+                "model": model_id,
+                "temperature": temperature,
+                "max_tokens": max_tokens,
+                "messages": [
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": user_prompt},
                 ],
-            )
+            }
+            if self._extra_body:
+                request_kwargs["extra_body"] = self._extra_body
+            response = self._client.chat.completions.create(**request_kwargs)
         except Exception as exc:
             raise ProviderError(f"OpenAI-compatible API error: {exc}") from exc
 
         choice = response.choices[0] if response.choices else None
-        text = choice.message.content or "" if choice else ""
+        text = choice.message.content if choice else ""
+        
+        if not text and choice and hasattr(choice.message, "reasoning_content"):
+            text = choice.message.reasoning_content or ""
 
         usage = {}
         if response.usage:
