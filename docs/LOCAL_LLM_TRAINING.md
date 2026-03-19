@@ -29,6 +29,55 @@ uv run autoctx run --scenario grid_ctf --gens 5 --run-id training-run
 
 ---
 
+### llama-server (Compiled from Source - Working)
+
+We compiled llama-server from source with the latest llama.cpp.
+
+**Location:** `~/llama-server/llama-server`
+
+**Build Notes:**
+- Compiled with MTMD support and server enabled
+- Using CPU backend (CUDA toolkit 11.2 incompatible with GCC 13)
+- Model: Qwen3.5-4B with `--reasoning off` flag
+
+**Important:** Qwen3.5 models use thinking mode by default. You MUST use `--reasoning off` when starting the server.
+
+**Start Server:**
+```bash
+cd ~/llama-server
+./llama-server \
+    -m /home/alex/models/qwen3.5/Qwen_Qwen3.5-4B-IQ4_XS.gguf \
+    -c 64000 \
+    --port 8130 \
+    --host "0.0.0.0" \
+    -ngl 99 \
+    --reasoning off \
+    -tb 6 -t 6
+```
+
+**Or use the script:**
+```bash
+bash ~/autocontext-fork/scripts/start-llama-server.sh
+```
+
+**Run Training:**
+```bash
+cd ~/autocontext-fork/autocontext
+source .venv/bin/activate
+
+export AUTOCONTEXT_AGENT_PROVIDER=llama
+export AUTOCONTEXT_AGENT_DEFAULT_MODEL=Qwen_Qwen3.5-4B-IQ4_XS.gguf
+
+uv run autoctx run --scenario grid_ctf --gens 5 --run-id llama-training
+```
+
+**Or use the script:**
+```bash
+bash ~/autocontext-fork/scripts/autocontext-llama-train.sh
+```
+
+---
+
 ### llama-server Binary (Not Working)
 
 The compiled llama-server binaries (`~/llama-server/llama-server` and `llama-server-cuda`) require a newer version of `libmtmd.so.0` than what's available in the system.
