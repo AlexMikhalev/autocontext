@@ -5,7 +5,7 @@ description: Operational knowledge for the grid_ctf scenario including strategy 
 
 # Grid Ctf Operational Knowledge
 
-Accumulated knowledge from AutoContext strategy evolution.
+Accumulated knowledge from autocontext strategy evolution.
 
 ## Operational Lessons
 
@@ -33,10 +33,7 @@ Prescriptive rules derived from what worked and what failed:
 - When conditions exactly match a proven baseline, deploy it directly rather than converging incrementally.
 - When aggression exceeds 0.7 without proportional defense, win rate drops.
 - Defensive anchor above 0.5 stabilizes Elo across generations.
-- Generation 2 ROLLBACK after 2 retries (score=0.7369, delta=-0.0461, threshold=0.005). Strategy: {"aggression": 0.62, "defense": 0.52, "path_bias": 0.58}. Narrative: Capture phase ended with progress 0.61, defender survival 0.96, and energy efficiency 0.87.. Avoid this approach.
-- Generation 3 ROLLBACK after 2 retries (score=0.7339, delta=-0.0491, threshold=0.005). Strategy: {"aggression": 0.62, "defense": 0.52, "path_bias": 0.58}. Narrative: Capture phase ended with progress 0.61, defender survival 0.96, and energy efficiency 0.87.. Avoid this approach.
-- Generation 4 ROLLBACK after 2 retries (score=0.7669, delta=-0.0161, threshold=0.005). Strategy: {"aggression": 0.62, "defense": 0.52, "path_bias": 0.58}. Narrative: Capture phase ended with progress 0.66, defender survival 0.96, and energy efficiency 0.87.. Avoid this approach.
-- Generation 5 ROLLBACK after 2 retries (score=0.7396, delta=-0.0434, threshold=0.005). Strategy: {"aggression": 0.62, "defense": 0.52, "path_bias": 0.58}. Narrative: Capture phase ended with progress 0.62, defender survival 0.96, and energy efficiency 0.87.. Avoid this approach.
+- Generation 2 ROLLBACK after 2 retries (score=0.6851, delta=-0.0438, threshold=0.005). Strategy: {"aggression": 0.48, "defense": 0.5, "path_bias": 0.5}. Narrative: Capture phase ended with progress 0.50, defender survival 1.00, and energy efficiency 0.91.. Avoid this approach.
 
 ## Bundled Resources
 
